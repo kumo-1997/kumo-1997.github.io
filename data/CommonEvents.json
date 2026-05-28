@@ -1,0 +1,7 @@
+[
+null,
+{"id":1,"list":[{"code":101,"indent":0,"parameters":["",0,0,2,""]},{"code":401,"indent":0,"parameters":["你使用了普通城鎮卷軸"]},{"code":201,"indent":0,"parameters":[0,2,17,15,0,0]},{"code":250,"indent":0,"parameters":[{"name":"Wind1","volume":70,"pitch":100,"pan":0}]},{"code":121,"indent":0,"parameters":[41,41,1]},{"code":0,"indent":0,"parameters":[]}],"name":"返回普通城鎮","switchId":41,"trigger":1},
+{"id":2,"list":[{"code":0,"indent":0,"parameters":[]}],"name":"","switchId":1,"trigger":0},
+{"id":3,"list":[{"code":0,"indent":0,"parameters":[]}],"name":"","switchId":1,"trigger":0},
+{"id":4,"list":[{"code":0,"indent":0,"parameters":[]}],"name":"","switchId":1,"trigger":0}
+]
