@@ -1,0 +1,19 @@
+# Build/runtime
+*.exe
+*.dll
+*.pak
+*.bin
+debug.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Save
+save/
+
+# RPG Maker backup
+*.bak
+
+/locales/
+/swiftshader/
