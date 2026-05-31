@@ -227,6 +227,10 @@
           $gameMessage.add(line);
         }
       );
+
+      $gameMessage.add("完成後將會獲得:");
+
+      task.rewardText.forEach((line) => $gameMessage.add(line));
     }
   );
 
