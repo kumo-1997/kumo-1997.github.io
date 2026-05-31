@@ -37,10 +37,19 @@
     READY_TO_REPORT: 2,
     COMPLETED: 3
   };
+  const QUEST_STATE_MAP = {
+    [QUEST_STATE.NOT_ACCEPTED]: "未接取",
+    [QUEST_STATE.ACTIVE]: "進行中",
+    [QUEST_STATE.READY_TO_REPORT]: "等待回報",
+    [QUEST_STATE.COMPLETED]: "已完成"
+  };
+
 
   const ACTIVE_TASK_VAR = 51;
   const SELECTED_TASK_VAR = 50;
   const PLAYER_CURRENT_RANK = 3;
+  const PREPARE_TO_REPORT_FLAG = 4; // 準備回報任務
+  const NO_AVAILABLE_TASK_FLAG = 21; // 當前沒有任務可選
   const SELECTED_RANK_VAR = 52;
 
   window.KumoQuest = {
@@ -59,8 +68,11 @@
       ).filter(task =>
         task.rank === rank
       );
-    }
+    },
 
+    clearSelectedTask() {
+      window.KumoQuest.selectedTask = null;
+    }
   };
 
   // ==========================
@@ -136,6 +148,8 @@
           "目前沒有可接受的委託。"
         );
 
+        $gameSwitches.setValue(NO_AVAILABLE_TASK_FLAG, true);
+
         return;
       }
 
@@ -155,8 +169,7 @@
 
           if (index < 0) {
 
-            KumoQuest.selectedTask =
-              null;
+            window.KumoQuest.clearSelectedTask();
 
             return;
           }
@@ -196,9 +209,11 @@
 
       if (!task) {
 
-        $gameMessage.add(
-          "尚未選擇任務。"
-        );
+        if (window.KumoQuest.availableTasks.length > 0) {
+          $gameMessage.add(
+            "尚未選擇任務。"
+          );
+        }
 
         return;
       }
@@ -300,9 +315,15 @@
         return;
       }
 
+      const taskState = $gameVariables.value(task.stateVar);
+
       $gameMessage.add(
         `【${task.title}】`
       );
+
+      $gameMessage.add(`狀態為: ${QUEST_STATE_MAP[taskState]}`);
+      $gameMessage.add("");
+      $gameMessage.add("");
 
       task.description.forEach(
         line => {
@@ -355,9 +376,11 @@
       $gameMessage.add(
         "已取消任務。"
       );
+
+      window.KumoQuest.clearSelectedTask();
     }
   );
-  
+
   // ==========================
   // 完成當前任務
   // ==========================
@@ -398,6 +421,9 @@
       $gameMessage.add(
         "委託目標已達成，請返回公會回報。"
       );
+
+
+      $gameSwitches.setValue(PREPARE_TO_REPORT_FLAG, true);
     }
   );
 
@@ -452,6 +478,9 @@
       $gameTemp.reserveCommonEvent(
         task.rewardEventId
       );
+
+      $gameSwitches.setValue(PREPARE_TO_REPORT_FLAG, false);
+      window.KumoQuest.clearSelectedTask();
     }
   );
 
