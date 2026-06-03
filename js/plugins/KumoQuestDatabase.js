@@ -4,10 +4,24 @@
  * @author Kumo
  */
 
+/**
+ * @typedef {Object} Quest
+ * @property {number} id 任務 ID
+ * @property {number} rank 任務需求冒險者等級
+ * @property {number} stateVar 用於儲存任務狀態的變數 ID
+ * @property {number} rewardEventId 領取獎勵時執行的共用事件 ID
+ * @property {string} title 任務標題
+ * @property {string[]} description 任務描述內容
+ * @property {string[]} rewardText 任務獎勵說明文字
+ * @property {number | undefined} previousTaskId 前置任務 ID
+ */
+
 (() => {
 
+  
   window.KumoQuestDatabase = {
     // key = task id = task state variable id
+    /** @type {Record<number, Quest>} */
     tasks: {
 
       82: {
@@ -16,19 +30,15 @@
         stateVar: 82,
         rewardEventId: 62,
 
-        title: "「村長A的委託」討伐初始之地的哥布林",
+        title: "「南方小鎮奧客的委託」討伐初始之地的哥布林",
 
         description: [
-          "目前森林內大量哥布林離開他們原本居住的山洞",
-          "這將威脅到村莊的安全",
-          "請前往討伐該魔物，讓他們回去洞穴裡",
+          "哥布林威脅村莊",
+          "需盡快解決",
+          "請冒險者前往南方小鎮取得詳細資訊",
         ],
 
-        rewardText: [
-          "500 \\G",
-          "攻擊力增加劑 1 個",
-          "經驗值 300"
-        ],
+        rewardText: [""],
       },
 
       83: {
@@ -94,6 +104,51 @@
           "450 \\G",
           "魔冰罐 2 個",
           "經驗值 400"
+        ],
+      },
+
+      86: {
+        id: 86,
+        rank: 1,
+        stateVar: 86,
+        rewardEventId: 65,
+
+        title: "「南方村落妹妹的請託」協助尋找圍巾材料",
+
+        description: [
+          "平常在河邊的小妹妹希望為村落中的狐寶織圍巾",
+          "但因為近期魔物的活躍導致材料收集困難",
+          "",
+          "請接洽任務的冒險者前往南方村落",
+          "讓當地狐寶能有條好圍巾"
+        ],
+
+        rewardText: [
+          "300 \\G",
+          "經驗值 350"
+        ],
+      },
+
+      87: {
+        id: 87,
+        rank: 1,
+        stateVar: 87,
+        rewardEventId: 66,
+        previousTaskId: 86,
+
+        title: "「南方村落姊妹的請託」村莊裡的狐狸走失了!",
+
+        description: [
+          "平常盯著河邊看的小妹妹突然發現",
+          "原本村落常常躺在她身旁的狐狸沒有再出現了",
+          "",
+          "她焦急的飯不下嚥，每天以淚洗面",
+          "希望有好心人士可以協助尋找"
+        ],
+
+        rewardText: [
+          "500 \\G",
+          "經驗值 550"
         ],
       },
 

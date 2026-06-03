@@ -70,6 +70,33 @@
       );
     },
 
+    canAcceptTask(task) {
+
+      if (
+        $gameVariables.value(task.stateVar) !==
+        QUEST_STATE.NOT_ACCEPTED
+      ) {
+        return false;
+      }
+
+      if (!task.previousTaskId) {
+        return true;
+      }
+
+      const previousTask =
+        this.getTask(task.previousTaskId);
+
+      if (!previousTask) {
+        return false;
+      }
+
+      return (
+        $gameVariables.value(
+          previousTask.stateVar
+        ) === QUEST_STATE.COMPLETED
+      );
+    },
+
     clearSelectedTask() {
       window.KumoQuest.selectedTask = null;
     }
@@ -131,14 +158,11 @@
           SELECTED_RANK_VAR
         );
 
-      KumoQuest.availableTasks =
-        KumoQuest
-          .getTasksByRank(rank)
-          .filter(task =>
-            $gameVariables.value(
-              task.stateVar
-            ) === QUEST_STATE.NOT_ACCEPTED
-          );
+      KumoQuest.availableTasks = KumoQuest
+        .getTasksByRank(rank)
+        .filter(task =>
+          KumoQuest.canAcceptTask(task)
+        );
 
       if (
         KumoQuest.availableTasks.length === 0

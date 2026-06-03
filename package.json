@@ -3,7 +3,7 @@
     "main": "index.html",
     "chromium-args": "--force-color-profile=srgb --disable-devtools",
     "window": {
-        "title": "貓貓的債務冒險",
+        "title": "翻天喜地債大錢",
         "width": 816,
         "height": 624,
         "position": "center",
