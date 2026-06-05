@@ -27,6 +27,13 @@
  * @command ReportCurrentTask
  * @text 回報任務
  * 
+ * @command CheckRankCompleted
+ * @text 檢查 Rank 是否全部完成
+ * @arg rank
+ * @text rank (第一順位)
+ * @arg rankId
+ * @text rankId (第二順位)
+ * @arg resultSwitchId
  */
 
 (() => {
@@ -512,4 +519,42 @@
     }
   );
 
+  // ==========================
+  // 檢查 Rank 是否全部完成
+  // ==========================
+  PluginManager.registerCommand(
+    "KumoQuestSystem",
+    "CheckRankCompleted",
+    function (args) {
+
+      let rank = Number(args.rank || 0);
+
+      if (rank <= 0) {
+        const rankId = Number(args.rankId || 0);
+
+        if (rankId > 0) {
+          rank = $gameVariables.value(rankId);
+        }
+      }
+
+      const resultSwitchId =
+        Number(args.resultSwitchId);
+
+      const tasks =
+        Object.values(KumoQuestDatabase.tasks)
+          .filter(task => task.rank === rank);
+
+      const isCompleted =
+        tasks.length > 0 &&
+        tasks.every(task =>
+          $gameVariables.value(task.stateVar)
+          >= QUEST_STATE.COMPLETED
+        );
+
+      $gameSwitches.setValue(
+        resultSwitchId,
+        isCompleted
+      );
+    }
+  );
 })();

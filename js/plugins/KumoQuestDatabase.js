@@ -111,7 +111,8 @@
         id: 86,
         rank: 1,
         stateVar: 86,
-        rewardEventId: 65,
+        rewardEventId: 66,
+        previousTaskId: 85,
 
         title: "「南方村落妹妹的請託」協助尋找圍巾材料",
 
@@ -133,7 +134,7 @@
         id: 87,
         rank: 1,
         stateVar: 87,
-        rewardEventId: 66,
+        rewardEventId: 67,
         previousTaskId: 86,
 
         title: "「南方村落姊妹的請託」村莊裡的狐狸走失了!",
