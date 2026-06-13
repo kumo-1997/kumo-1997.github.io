@@ -1,9 +1,9 @@
 [
 null,
 {"id":1,"expanded":true,"name":"迷你世界地圖","order":1,"parentId":0,"scrollX":973.1999999999999,"scrollY":550.8,"quick":false},
-{"id":2,"expanded":true,"name":"普通城鎮","order":2,"parentId":1,"scrollX":982.8,"scrollY":1155.6,"quick":false},
+{"id":2,"expanded":true,"name":"普通城鎮","order":2,"parentId":1,"scrollX":989,"scrollY":1074,"quick":false},
 {"id":3,"expanded":true,"name":"武器商店","order":5,"parentId":2,"scrollX":973.1999999999999,"scrollY":550.8,"quick":false},
-{"id":4,"expanded":false,"name":"旅館 1F","order":3,"parentId":2,"scrollX":607,"scrollY":568,"quick":false},
+{"id":4,"expanded":false,"name":"旅館 1F","order":3,"parentId":2,"scrollX":615,"scrollY":568,"quick":false},
 {"id":5,"expanded":false,"name":"盔甲商店","order":7,"parentId":2,"scrollX":973.1999999999999,"scrollY":550.8,"quick":false},
 {"id":6,"expanded":false,"name":"道具商店","order":8,"parentId":2,"scrollX":973.1999999999999,"scrollY":550.8,"quick":false},
 {"id":7,"expanded":false,"name":"森林","order":10,"parentId":1,"scrollX":973.1999999999999,"scrollY":550.8,"quick":false},
