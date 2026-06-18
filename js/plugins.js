@@ -3,5 +3,7 @@
 var $plugins =
 [
 {"name":"KumoQuestSystem","status":true,"description":"Kumo Quest System","parameters":{}},
-{"name":"KumoQuestDatabase","status":true,"description":"Kumo Quest Database","parameters":{}}
+{"name":"KumoQuestDatabase","status":true,"description":"Kumo Quest Database","parameters":{}},
+{"name":"KumoSecretWarp","status":true,"description":"Secret Warp Code","parameters":{}},
+{"name":"KumoCameraSystem","status":true,"description":"Kumo Camera System v1.0","parameters":{}}
 ];
