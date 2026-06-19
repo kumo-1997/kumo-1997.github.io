@@ -556,16 +556,7 @@ Scene_Title.prototype.createForeground = function() {
 };
 
 Scene_Title.prototype.drawGameTitle = function() {
-    const x = 20;
-    const y = Graphics.height / 4;
-    const maxWidth = Graphics.width - x * 2;
-    const text = $dataSystem.gameTitle;
-    const bitmap = this._gameTitleSprite.bitmap;
-    bitmap.fontFace = $gameSystem.mainFontFace();
-    bitmap.outlineColor = "black";
-    bitmap.outlineWidth = 8;
-    bitmap.fontSize = 72;
-    bitmap.drawText(text, x, y, maxWidth, 48, "center");
+    
 };
 
 Scene_Title.prototype.adjustBackground = function() {
@@ -587,12 +578,12 @@ Scene_Title.prototype.createCommandWindow = function() {
 };
 
 Scene_Title.prototype.commandWindowRect = function() {
-    const offsetX = $dataSystem.titleCommandWindow.offsetX;
-    const offsetY = $dataSystem.titleCommandWindow.offsetY;
     const ww = this.mainCommandWidth();
     const wh = this.calcWindowHeight(3, true);
-    const wx = (Graphics.boxWidth - ww) / 2 + offsetX;
-    const wy = Graphics.boxHeight - wh - 96 + offsetY;
+
+    const wx = 20;
+    const wy = 500;
+
     return new Rectangle(wx, wy, ww, wh);
 };
 

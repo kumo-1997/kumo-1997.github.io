@@ -3,9 +3,9 @@
     "main": "index.html",
     "chromium-args": "--force-color-profile=srgb --disable-devtools",
     "window": {
-        "title": "翻天喜地債大錢",
-        "width": 816,
-        "height": 624,
+        "title": "負可敵國，散財萬貫",
+        "width": 1024,
+        "height": 684,
         "position": "center",
         "icon": "icon/icon.png"
     }
