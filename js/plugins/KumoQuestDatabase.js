@@ -18,7 +18,7 @@
 
 (() => {
 
-  
+
   window.KumoQuestDatabase = {
     // key = task id = task state variable id
     /** @type {Record<number, Quest>} */
@@ -61,30 +61,30 @@
         rewardText: [
           "400 \\G",
           "藥水 3 個",
-          "經驗值 250"
+          "經驗值 500"
         ],
       },
 
-      84: {
-        id: 84,
-        rank: 1,
-        stateVar: 84,
-        rewardEventId: 64,
+      // 84: {
+      //   id: 84,
+      //   rank: 1,
+      //   stateVar: 84,
+      //   rewardEventId: 64,
 
-        title: "「冒險者導師的委託」討伐初始之地Boss",
+      //   title: "「冒險者導師的委託」討伐初始之地Boss",
 
-        description: [
-          "你以為拿到試煉之證很厲害嗎? ",
-          "初始之地的Boss表示不同意",
-          "他希望再被虐一次，請前往討伐",
-        ],
+      //   description: [
+      //     "你以為拿到試煉之證很厲害嗎? ",
+      //     "初始之地的Boss表示不同意",
+      //     "他希望再被虐一次，請前往討伐",
+      //   ],
 
-        rewardText: [
-          "650 \\G",
-          "敏捷增加劑 1 個",
-          "經驗值 350"
-        ],
-      },
+      //   rewardText: [
+      //     "650 \\G",
+      //     "敏捷增加劑 1 個",
+      //     "經驗值 350"
+      //   ],
+      // },
 
       85: {
         id: 85,
@@ -103,7 +103,7 @@
         rewardText: [
           "450 \\G",
           "魔冰罐 2 個",
-          "經驗值 400"
+          "經驗值 800"
         ],
       },
 
@@ -126,7 +126,7 @@
 
         rewardText: [
           "300 \\G",
-          "經驗值 350"
+          "經驗值 700"
         ],
       },
 
@@ -149,7 +149,7 @@
 
         rewardText: [
           "500 \\G",
-          "經驗值 550"
+          "經驗值 1100"
         ],
       },
 
@@ -170,7 +170,7 @@
         rewardText: [
           "1250 \\G",
           "攻擊力增加劑 4 個",
-          "EXP: 1000",
+          "EXP: 2000",
         ],
       },
       103: {
@@ -193,7 +193,7 @@
         rewardText: [
           "950 \\G",
           "敏捷增加劑 4 個",
-          "EXP: 1500",
+          "EXP: 3000",
         ],
       },
       104: {
@@ -214,10 +214,33 @@
         rewardText: [
           "1000 \\G",
           "防禦增加劑 4 個",
-          "EXP: 1500",
+          "EXP: 3000",
         ],
       },
     }
   };
 
+  // 臨時放在這 demo 到達特定章節後提前結束遊戲
+  const CHAPTER_STAGE_ID = 62;
+  const DEMO_CHAPTER_STAGE = 4;
+  const DEMO_EVENT_ID = 29;
+
+  const _Scene_Map_update =
+    Scene_Map.prototype.update;
+
+  Scene_Map.prototype.update =
+    function () {
+
+      _Scene_Map_update.call(this);
+
+      if (
+        $gameVariables.value(CHAPTER_STAGE_ID) >= DEMO_CHAPTER_STAGE
+      ) {
+
+        $gameTemp.reserveCommonEvent(
+          DEMO_EVENT_ID
+        );
+      }
+    };
+    
 })();
