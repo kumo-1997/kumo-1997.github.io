@@ -2812,6 +2812,54 @@ BattleManager.endAction = function() {
         this.endBattlerActions(this._subject);
         this._subject = null;
     }
+
+    const PICTURE_ID = 2;
+    const CAT_ID = 9;
+    const CatDamageStateID = 19;
+    const actor = $gameActors.actor(CAT_ID);
+    const CatDamageCG = "Cat_DamageCG";
+    const CatDamageState = $gameVariables.value(CatDamageStateID);
+
+    if (
+        actor.hpRate() < 0.5 &&
+        actor.hpRate() > 0 &&
+        CatDamageState < 1
+    ) {
+        AudioManager.playSe({
+            name: "Damage4",
+            volume: 50,
+            pitch: 100,
+            pan: 0
+        });
+        $gameScreen.startShake(5, 5, 20);
+        $gameScreen.showPicture(
+            PICTURE_ID,
+            CatDamageCG,
+            1,
+            Graphics.boxWidth,
+            Graphics.boxHeight / 2,
+            40,
+            40,
+            0,
+            20
+        );
+        $gameScreen.movePicture(
+            PICTURE_ID,
+            1,
+            Graphics.boxWidth / 1.25,
+            Graphics.boxHeight / 2,
+            40,
+            40,
+            255,
+            0,
+            30
+        );
+
+        $gameTemp.BattlePictureID = PICTURE_ID;
+        $gameTemp.BattlePictureTimer = 90;
+        $gameVariables.setValue(CatDamageStateID, 1);
+        
+    }
 };
 
 BattleManager.invokeAction = function(subject, target) {
@@ -2981,6 +3029,8 @@ BattleManager.processDefeat = function() {
 };
 
 BattleManager.endBattle = function(result) {
+    const CatDamageStateID = 19;
+
     this._phase = "battleEnd";
     this.cancelActorInput();
     this._inputting = false;
@@ -2993,6 +3043,8 @@ BattleManager.endBattle = function(result) {
         $gameSystem.onBattleEscape();
     }
     $gameTemp.clearCommonEventReservation();
+
+    $gameVariables.setValue(CatDamageStateID, 0);
 };
 
 BattleManager.updateBattleEnd = function() {

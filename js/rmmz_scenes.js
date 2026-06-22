@@ -1363,7 +1363,7 @@ Scene_Menu.prototype.start = function() {
     this._statusWindow.refresh();
 };
 
-Scene_Menu.prototype.createCommandWindow = function() {
+Scene_Menu.prototype.createCommandWindow = function () {
     const rect = this.commandWindowRect();
     const commandWindow = new Window_MenuCommand(rect);
     commandWindow.setHandler("item", this.commandItem.bind(this));
@@ -1371,13 +1371,16 @@ Scene_Menu.prototype.createCommandWindow = function() {
     commandWindow.setHandler("equip", this.commandPersonal.bind(this));
     commandWindow.setHandler("status", this.commandPersonal.bind(this));
     commandWindow.setHandler("formation", this.commandFormation.bind(this));
+    commandWindow.setHandler("teleport", this.commandTeleport.bind(this));
+    commandWindow.setHandler("recover",this.commandRecover.bind(this));
+    commandWindow.setHandler("notebook",this.commandNoteBook.bind(this));
     commandWindow.setHandler("options", this.commandOptions.bind(this));
     commandWindow.setHandler("save", this.commandSave.bind(this));
     commandWindow.setHandler("gameEnd", this.commandGameEnd.bind(this));
     commandWindow.setHandler("cancel", this.popScene.bind(this));
     this.addWindow(commandWindow);
     this._commandWindow = commandWindow;
-};
+}
 
 Scene_Menu.prototype.commandWindowRect = function() {
     const ww = this.mainCommandWidth();
@@ -1487,6 +1490,27 @@ Scene_Menu.prototype.onFormationCancel = function() {
         this._statusWindow.deselect();
         this._commandWindow.activate();
     }
+};
+
+Scene_Menu.prototype.commandTeleport = function () {
+
+    $gameTemp.reserveCommonEvent(18);
+
+    SceneManager.pop();
+};
+
+Scene_Menu.prototype.commandRecover = function () {
+
+    $gameTemp.reserveCommonEvent(16);
+
+    SceneManager.pop();
+};
+
+Scene_Menu.prototype.commandNoteBook = function () {
+
+    $gameTemp.reserveCommonEvent(55);
+
+    SceneManager.pop();
 };
 
 //-----------------------------------------------------------------------------
@@ -3070,6 +3094,23 @@ Scene_Battle.prototype.update = function() {
         this.updateBattleProcess();
     }
     Scene_Message.prototype.update.call(this);
+
+    if (
+        $gameTemp.BattlePictureTimer > 0
+        && $gameTemp.BattlePictureID
+    ) {
+
+        $gameTemp.BattlePictureTimer--;
+
+        if (
+            $gameTemp.BattlePictureTimer === 0
+        ) {
+
+            $gameScreen.erasePicture(
+                $gameTemp.BattlePictureID
+            );
+        }
+    }
 };
 
 Scene_Battle.prototype.updateVisibility = function() {
@@ -3495,6 +3536,45 @@ Scene_Battle.prototype.commandCancel = function() {
 };
 
 Scene_Battle.prototype.selectNextCommand = function() {
+    const actor = BattleManager.actor();
+
+    const CAT_ID = 9;
+    const PICTURE_ID = 1;
+    const PICTURE_NAME = "Running_Cat";
+
+    if (
+        actor?._actorId === CAT_ID &&
+        actor._actions.length > 1 &&
+        actor._actionInputIndex < actor._actions.length - 1
+    ) {
+
+        $gameScreen.showPicture(
+            PICTURE_ID,
+            PICTURE_NAME,
+            1,
+            0,
+            Graphics.boxHeight / 2,
+            50,
+            50,
+            0,
+            0
+        );
+        $gameScreen.movePicture(
+            PICTURE_ID,
+            1,
+            Graphics.boxWidth / 2,
+            Graphics.boxHeight / 2,
+            50,
+            50,
+            255,
+            0,
+            20
+        );
+
+        $gameTemp.BattlePictureID = PICTURE_ID;
+        $gameTemp.BattlePictureTimer = 60;
+    }
+    
     BattleManager.selectNextCommand();
     this.changeInputWindow();
 };
