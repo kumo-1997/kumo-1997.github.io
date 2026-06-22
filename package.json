@@ -3,7 +3,7 @@
     "main": "index.html",
     "chromium-args": "--force-color-profile=srgb --disable-devtools",
     "window": {
-        "title": "負可敵國，散財萬貫 Version 0.2.0",
+        "title": "負可敵國，散財萬貫 Version 0.2.2",
         "width": 1024,
         "height": 684,
         "position": "center",
