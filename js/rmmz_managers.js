@@ -2821,6 +2821,7 @@ BattleManager.endAction = function() {
     const CatDamageState = $gameVariables.value(CatDamageStateID);
 
     if (
+        actor &&
         actor.hpRate() < 0.5 &&
         actor.hpRate() > 0 &&
         CatDamageState < 1
@@ -2838,8 +2839,8 @@ BattleManager.endAction = function() {
             1,
             Graphics.boxWidth,
             Graphics.boxHeight / 2,
-            40,
-            40,
+            100,
+            100,
             0,
             20
         );
@@ -2848,8 +2849,8 @@ BattleManager.endAction = function() {
             1,
             Graphics.boxWidth / 1.25,
             Graphics.boxHeight / 2,
-            40,
-            40,
+            100,
+            100,
             255,
             0,
             30

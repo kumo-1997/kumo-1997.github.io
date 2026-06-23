@@ -65,26 +65,27 @@
         ],
       },
 
-      // 84: {
-      //   id: 84,
-      //   rank: 1,
-      //   stateVar: 84,
-      //   rewardEventId: 64,
+      84: {
+        id: 84,
+        rank: 1,
+        stateVar: 84,
+        rewardEventId: 64,
+        previousTaskId: 86,
 
-      //   title: "「冒險者導師的委託」討伐初始之地Boss",
+        title: "「馬修的委託」初始之地Boss調查",
 
-      //   description: [
-      //     "你以為拿到試煉之證很厲害嗎? ",
-      //     "初始之地的Boss表示不同意",
-      //     "他希望再被虐一次，請前往討伐",
-      //   ],
+        description: [
+          "需要一名幫手前來討伐初始之地的Boss",
+          "他說希望再被虐一次",
+          "附註: 此戰鬥會有其他新人陪同，請好好表現",
+        ],
 
-      //   rewardText: [
-      //     "650 \\G",
-      //     "敏捷增加劑 1 個",
-      //     "經驗值 350"
-      //   ],
-      // },
+        rewardText: [
+          "650 \\G",
+          "敏捷增加劑 1 個",
+          "經驗值 750"
+        ],
+      },
 
       85: {
         id: 85,
@@ -112,7 +113,6 @@
         rank: 1,
         stateVar: 86,
         rewardEventId: 66,
-        previousTaskId: 85,
 
         title: "「南方村落妹妹的請託」協助尋找圍巾材料",
 
@@ -135,7 +135,7 @@
         rank: 1,
         stateVar: 87,
         rewardEventId: 67,
-        previousTaskId: 86,
+        previousTaskId: 84, // 86 -> 84 -> 87
 
         title: "「南方村落姊妹的請託」村莊裡的狐狸走失了!",
 
@@ -233,8 +233,15 @@
 
       _Scene_Map_update.call(this);
 
+      const task_102 = $gameVariables.value(102);
+      const task_103 = $gameVariables.value(103);
+      const task_104 = $gameVariables.value(104);
+
       if (
         $gameVariables.value(CHAPTER_STAGE_ID) >= DEMO_CHAPTER_STAGE
+        && task_102 >= 3
+        && task_103 >= 3
+        && task_104 >= 3
       ) {
 
         $gameTemp.reserveCommonEvent(

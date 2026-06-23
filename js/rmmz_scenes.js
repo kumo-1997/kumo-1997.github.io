@@ -3554,8 +3554,8 @@ Scene_Battle.prototype.selectNextCommand = function() {
             1,
             0,
             Graphics.boxHeight / 2,
-            50,
-            50,
+            100,
+            100,
             0,
             0
         );
@@ -3564,8 +3564,8 @@ Scene_Battle.prototype.selectNextCommand = function() {
             1,
             Graphics.boxWidth / 2,
             Graphics.boxHeight / 2,
-            50,
-            50,
+            100,
+            100,
             255,
             0,
             20
