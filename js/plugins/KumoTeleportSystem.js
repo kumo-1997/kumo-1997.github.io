@@ -15,6 +15,9 @@
  * @command ShowCallbackMessage
  * @text 顯示 Callback 的訊息
  *
+ * @command MoveTeleportPointToOtherMap
+ * @text 移動地圖傳送點到新地圖，程式內部使用
+ * 
  * @param SlotCount
  * @text 傳送點數量
  * @type number
@@ -80,6 +83,14 @@
       }
 
       return this._teleportSlots;
+    };
+
+  Game_System.prototype.setTeleportSlots =
+    function (slots) {
+      if (!Array.isArray(slots)) return;
+      if (slots.length !== this._teleportSlots.length) return;
+
+      this._teleportSlots = slots;
     };
 
   // =========================
@@ -313,6 +324,40 @@
         $gameMessage.add(window.KumoTeleportData.callbackMessage);
         window.KumoTeleportData.callbackMessage = null;
       }
+    }
+  );
+
+  PluginManager.registerCommand(
+    PLUGIN_NAME,
+    "MoveTeleportPointToOtherMap",
+    function () {
+      const slots = $gameSystem.teleportSlots();
+      const newSlots = [];
+
+      const replacedIdMap = {
+        23: 31,
+        24: 34,
+      };
+
+      slots.forEach((slot) => {
+        const oldMapId = slot?.mapId;
+
+        if (!oldMapId) {
+          newSlots.push(slot);
+          return;
+        }
+
+        const newMapId = replacedIdMap[oldMapId];
+        let newSlot = { ...slot }
+
+        if (newMapId) {
+          newSlot.mapId = newMapId;
+        }
+
+        newSlots.push(newSlot);
+      });
+
+      $gameSystem.setTeleportSlots(newSlots);
     }
   );
 

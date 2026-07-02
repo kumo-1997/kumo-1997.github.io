@@ -217,6 +217,27 @@
           "EXP: 3000",
         ],
       },
+      105: {
+        id: 105,
+        rank: 2,
+        stateVar: 105,
+        rewardEventId: 85,
+        previousTaskId: 102,
+
+        title: "[緊急任務: 艾蓮的防禦委託] 雪山外圍魔物防禦戰",
+
+        description: [
+          "繼上次雪山調查之後，魔物出現的頻率增加",
+          "為了阻擋魔物的攻勢，會在雪山外圍建立營地",
+          "營地完成之前需要2級冒險者前來協助防守"
+        ],
+
+        rewardText: [
+          "1500 \\G",
+          "運氣增加劑 4 個",
+          "EXP: 3500",
+        ],
+      },
     }
   };
 
@@ -224,6 +245,7 @@
   const CHAPTER_STAGE_ID = 62;
   const DEMO_CHAPTER_STAGE = 4;
   const DEMO_EVENT_ID = 29;
+  const IFNORE_DEMO_CHECK_FLAG = 20;
 
   const _Scene_Map_update =
     Scene_Map.prototype.update;
@@ -232,6 +254,12 @@
     function () {
 
       _Scene_Map_update.call(this);
+
+      const isIgnoreDemoCheck = $gameSwitches.value(IFNORE_DEMO_CHECK_FLAG);
+
+      if (isIgnoreDemoCheck) {
+        return;
+      }
 
       const task_102 = $gameVariables.value(102);
       const task_103 = $gameVariables.value(103);
