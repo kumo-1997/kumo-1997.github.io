@@ -6,5 +6,5 @@ var $plugins =
 {"name":"KumoQuestDatabase","status":true,"description":"Kumo Quest Database","parameters":{}},
 {"name":"KumoSecretWarp","status":true,"description":"Secret Warp Code","parameters":{}},
 {"name":"KumoCameraSystem","status":true,"description":"Kumo Camera System v1.0","parameters":{}},
-{"name":"KumoTeleportSystem","status":true,"description":"Kumo Teleport Stone System","parameters":{"SlotCount":"5","BlockedMaps":"[\"39\",\"40\",\"41\"]"}}
+{"name":"KumoTeleportSystem","status":true,"description":"Kumo Teleport Stone System","parameters":{"SlotCount":"5","BlockedMaps":"[\"39\",\"40\",\"41\",\"49\",\"50\",\"51\"]"}}
 ];

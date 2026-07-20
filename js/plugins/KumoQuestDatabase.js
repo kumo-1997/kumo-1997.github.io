@@ -243,12 +243,11 @@
 
   // 臨時放在這 demo 到達特定章節後提前結束遊戲
   const CHAPTER_STAGE_ID = 62;
-  const DEMO_CHAPTER_STAGE = 4;
+  const DEMO_CHAPTER_STAGE = 5; // 5 = 第四章節開始，但是還沒進入第5章節的主要劇情
   const DEMO_EVENT_ID = 29;
   const IFNORE_DEMO_CHECK_FLAG = 20;
 
-  const _Scene_Map_update =
-    Scene_Map.prototype.update;
+  const _Scene_Map_update = Scene_Map.prototype.update;
 
   Scene_Map.prototype.update =
     function () {
@@ -261,15 +260,17 @@
         return;
       }
 
-      const task_102 = $gameVariables.value(102);
-      const task_103 = $gameVariables.value(103);
-      const task_104 = $gameVariables.value(104);
+      // const task_102 = $gameVariables.value(102);
+      // const task_103 = $gameVariables.value(103);
+      // const task_104 = $gameVariables.value(104);
+      const chapter_4_stage = $gameVariables.value(77);
 
       if (
         $gameVariables.value(CHAPTER_STAGE_ID) >= DEMO_CHAPTER_STAGE
-        && task_102 >= 3
-        && task_103 >= 3
-        && task_104 >= 3
+        && chapter_4_stage >= 5
+        // && task_102 >= 3
+        // && task_103 >= 3
+        // && task_104 >= 3
       ) {
 
         $gameTemp.reserveCommonEvent(
@@ -277,4 +278,12 @@
         );
       }
     };
+
+  const _Scene_Map_onMapLoaded = Scene_Map.prototype.onMapLoaded;
+
+  Scene_Map.prototype.onMapLoaded = function () {
+    _Scene_Map_onMapLoaded.call(this);
+
+    $gamePlayer.setMoveSpeed(5);
+  };
 })();

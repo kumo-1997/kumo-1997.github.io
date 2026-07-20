@@ -339,7 +339,12 @@
         24: 34,
       };
 
-      slots.forEach((slot) => {
+      const safeTeleportPointMap = {
+        31: { x: 12, y: 25 },
+        34: { x: 12, y: 31 },
+      };
+
+      slots.forEach(slot => {
         const oldMapId = slot?.mapId;
 
         if (!oldMapId) {
@@ -348,11 +353,17 @@
         }
 
         const newMapId = replacedIdMap[oldMapId];
-        let newSlot = { ...slot }
 
-        if (newMapId) {
-          newSlot.mapId = newMapId;
+        if (!newMapId) {
+          newSlots.push(slot);
+          return;
         }
+
+        const newSlot = {
+          ...slot,
+          mapId: newMapId,
+          ...(safeTeleportPointMap[newMapId] ?? {}),
+        };
 
         newSlots.push(newSlot);
       });
