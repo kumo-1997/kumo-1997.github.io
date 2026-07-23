@@ -6,5 +6,9 @@ var $plugins =
 {"name":"KumoQuestDatabase","status":true,"description":"Kumo Quest Database","parameters":{}},
 {"name":"KumoSecretWarp","status":true,"description":"Secret Warp Code","parameters":{}},
 {"name":"KumoCameraSystem","status":true,"description":"Kumo Camera System v1.0","parameters":{}},
-{"name":"KumoTeleportSystem","status":true,"description":"Kumo Teleport Stone System","parameters":{"SlotCount":"5","BlockedMaps":"[\"39\",\"40\",\"41\",\"49\",\"50\",\"51\"]"}}
+{"name":"KumoTeleportSystem","status":true,"description":"Kumo Teleport Stone System","parameters":{"SlotCount":"5","BlockedMaps":"[\"39\",\"40\",\"41\",\"49\",\"50\",\"51\"]"}},
+{"name":"Phileas_NovelStyleSaveWindow","status":true,"description":"v1.0.5 A novel-style save menu","parameters":{"screenshotSettings":"","screenshotWidth":"624","screenshotHeight":"624","screenshotAnchorX":"middle","screenshotAnchorY":"middle","windowSettings":"","columnsNumber":"2","rowsNumber":"2","spacing":"8","maxSaveFiles":"100","pageButtonPosition":"top","pageButtonMargin":"8"}},
+{"name":"Phileas_FileManager","status":true,"description":"1.1.0 Cross-platform file manager","parameters":{"updateStamp":"false"}},
+{"name":"Kumo_TitleCredits","status":true,"description":"Adds a Credits command to the Title Screen.","parameters":{"Command Name":"Credits","Map ID":"52","X":"15","Y":"10","Direction":"2","BlockedMaps":"[\"35\",\"52\"]"}},
+{"name":"Kumo_DisableAutoSave","status":true,"description":"Disable auto save tool","parameters":{"BlockedMaps":"[\"35\",\"52\"]"}}
 ];

@@ -24,7 +24,8 @@
 ```
 
 ```
-我現在要先討論圖片編輯的需求，所以不要直接產圖片
+絕對不要產圖片
+我現在要先討論圖片編輯的需求
 你現在是一名 ai prompt 工程師
 你的職責是將需求翻譯成 grok image 可以產生圖片的提示詞
 我都會提供母圖來做圖片編輯
@@ -41,6 +42,44 @@
 
 補充資訊
 羅莎設定為 21 歲，是冒險者公會的最強天才，知曉非常多知識，但卻有高敏感人格，很容易受他人情緒影響，除非是熟悉的人
+```
+
+嗷嗷表情差分
+```
+Edit this image.
+
+Preserve the original character identity, hairstyle, fox ears, face shape, outfit, armor, accessories, pose, body proportions, composition, lighting, shading, watercolor rendering style, soft anime eyes, and all other visual details exactly as in the original image.
+
+
+
+Do not change the clothing, pose, camera angle, hairstyle, body position, or illustration style.
+Render only the upper body portrait. Do not render any body parts below the chest.
+Use a pure white background.
+Output in a 1:1 aspect ratio.
+Limit the edit strictly to the face only.
+
+Keep every non-facial element unchanged.
+Do not reinterpret the character.
+Maintain the exact original illustration.
+Edit only the requested area.
+
+Positive prompt
+
+Negative prompt
+
+
+
+Reference Isolation
+
+The second image serves exclusively as a facial expression reference.
+
+Treat every non-facial element in the second image as irrelevant.
+
+Ignore all clothing, armor, hairstyle, ears, accessories, rendering style, lighting, colors, body proportions, composition, camera angle, and character design from the second image.
+
+The first image is the only source of truth for the character design.
+
+Only transfer the facial expression.
 ```
 
 圖片生成後會經過反覆編輯、挑選、以及部分手動修改

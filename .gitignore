@@ -11,6 +11,7 @@ Thumbs.db
 
 # Save
 save/
+img/saves
 
 # RPG Maker backup
 *.bak

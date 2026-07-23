@@ -581,7 +581,7 @@ Scene_Title.prototype.commandWindowRect = function() {
     const ww = this.mainCommandWidth();
     const wh = this.calcWindowHeight(3, true);
 
-    const wx = 20;
+    const wx = 754;
     const wy = 500;
 
     return new Rectangle(wx, wy, ww, wh);

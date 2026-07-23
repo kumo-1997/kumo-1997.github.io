@@ -241,6 +241,15 @@
     }
   };
 
+  // 修改按鈕配對規則
+
+  Input.keyMapper[87] = "up";          // W
+  Input.keyMapper[65] = "left";        // A
+  Input.keyMapper[83] = "down";        // S
+  Input.keyMapper[68] = "right";       // D
+
+  Input.keyMapper[69] = "pagedown";    // E (原本是W)
+
   // 臨時放在這 demo 到達特定章節後提前結束遊戲
   const CHAPTER_STAGE_ID = 62;
   const DEMO_CHAPTER_STAGE = 5; // 5 = 第四章節開始，但是還沒進入第5章節的主要劇情
