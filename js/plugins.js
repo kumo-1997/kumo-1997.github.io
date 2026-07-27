@@ -10,5 +10,8 @@ var $plugins =
 {"name":"Phileas_NovelStyleSaveWindow","status":true,"description":"v1.0.5 A novel-style save menu","parameters":{"screenshotSettings":"","screenshotWidth":"624","screenshotHeight":"624","screenshotAnchorX":"middle","screenshotAnchorY":"middle","windowSettings":"","columnsNumber":"2","rowsNumber":"2","spacing":"8","maxSaveFiles":"100","pageButtonPosition":"top","pageButtonMargin":"8"}},
 {"name":"Phileas_FileManager","status":true,"description":"1.1.0 Cross-platform file manager","parameters":{"updateStamp":"false"}},
 {"name":"Kumo_TitleCredits","status":true,"description":"Adds a Credits command to the Title Screen.","parameters":{"Command Name":"Credits","Map ID":"52","X":"15","Y":"10","Direction":"2","BlockedMaps":"[\"35\",\"52\"]"}},
-{"name":"Kumo_DisableAutoSave","status":true,"description":"Disable auto save tool","parameters":{"BlockedMaps":"[\"35\",\"52\"]"}}
+{"name":"Kumo_DisableAutoSave","status":true,"description":"Disable auto save tool","parameters":{"BlockedMaps":"[\"35\",\"52\"]"}},
+{"name":"KumoFloatingText","status":true,"description":"v1.0 簡易玩家飄字","parameters":{}},
+{"name":"KumoAutoFight","status":true,"description":"Better Auto Battle AI (Basic)","parameters":{}},
+{"name":"KumoCheckActorEquips","status":true,"description":"Check actors special equips","parameters":{}}
 ];

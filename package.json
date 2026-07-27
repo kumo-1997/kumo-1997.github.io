@@ -3,7 +3,7 @@
     "main": "index.html",
     "chromium-args": "--force-color-profile=srgb --disable-devtools",
     "window": {
-        "title": "負可敵國，散財萬貫 v0.4.1",
+        "title": "負可敵國，債晶傳奇 v0.6.0",
         "width": 1024,
         "height": 684,
         "position": "center",
