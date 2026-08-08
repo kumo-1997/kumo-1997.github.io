@@ -41,6 +41,8 @@ $gameMap = null;
 $gamePlayer = null;
 $testEvent = null;
 
+const DEFAULT_VOLUME = 20;
+
 DataManager._globalInfo = null;
 DataManager._errors = [];
 
@@ -526,7 +528,7 @@ ConfigManager.readVolume = function(config, name) {
     if (name in config) {
         return Number(config[name]).clamp(0, 100);
     } else {
-        return 100;
+        return DEFAULT_VOLUME;
     }
 };
 
@@ -1104,10 +1106,10 @@ function AudioManager() {
     throw new Error("This is a static class");
 }
 
-AudioManager._bgmVolume = 100;
-AudioManager._bgsVolume = 100;
-AudioManager._meVolume = 100;
-AudioManager._seVolume = 100;
+AudioManager._bgmVolume = DEFAULT_VOLUME;
+AudioManager._bgsVolume = DEFAULT_VOLUME;
+AudioManager._meVolume = DEFAULT_VOLUME;
+AudioManager._seVolume = DEFAULT_VOLUME;
 AudioManager._currentBgm = null;
 AudioManager._currentBgs = null;
 AudioManager._bgmBuffer = null;

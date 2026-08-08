@@ -241,15 +241,6 @@
     }
   };
 
-  // 修改按鈕配對規則
-
-  Input.keyMapper[87] = "up";          // W
-  Input.keyMapper[65] = "left";        // A
-  Input.keyMapper[83] = "down";        // S
-  Input.keyMapper[68] = "right";       // D
-
-  Input.keyMapper[69] = "pagedown";    // E (原本是W)
-
   // 臨時放在這 demo 到達特定章節後提前結束遊戲
   const CHAPTER_STAGE_ID = 62;
   const DEMO_CHAPTER_STAGE = 5; // 5 = 第四章節開始，但是還沒進入第5章節的主要劇情
@@ -294,5 +285,24 @@
     _Scene_Map_onMapLoaded.call(this);
 
     $gamePlayer.setMoveSpeed(5);
+  };
+
+  const TUTORIAL_SWITCH = 302; // 是否進行較學
+  const TUTORIAL_TYPE_VAR = 410; // 5 = 戰鬥教學
+
+  const _Game_BattlerBase_canUse = Game_BattlerBase.prototype.canUse;
+
+  Game_BattlerBase.prototype.canUse = function (item) {
+    if (
+      $gameSwitches.value(TUTORIAL_SWITCH) &&
+      $gameVariables.value(TUTORIAL_TYPE_VAR) === 5 &&
+      $gameParty.inBattle() &&
+      DataManager.isItem(item) &&
+      item.id !== 2 // 教學藥水 id
+    ) {
+      return false;
+    }
+
+    return _Game_BattlerBase_canUse.call(this, item);
   };
 })();

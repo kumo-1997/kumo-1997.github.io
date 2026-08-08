@@ -20,3 +20,6 @@ TBD
 ## 其他
 
 - "code"\s*:\s*117[\s\S]*?"parameters"\s*:\s*\[\s*19\s*\] 可以檢查所有的探索互動要素
+- BattleTester.repeat(50, { troopId: 12, actorId: 9, level: 8 }) 開啟戰鬥測試用插件就能用這段程式碼快速測試
+- "code"\s*:\s*117[\s\S]{0,100}?"parameters"\s*:\s*\[\s*10\b 可以查詢所有用到 通用事件_id = 10 的地方
+- steam 成就可能用到的 plugin: https://rabbitteaparty.itch.io/nekogakuen-steamworksplus

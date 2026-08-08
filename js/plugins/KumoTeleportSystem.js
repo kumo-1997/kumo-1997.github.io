@@ -142,10 +142,12 @@
     choices.push("記錄目前位置");
     choices.push("取消");
 
+    const cancelIndex = choices.length - 1;
+
     $gameMessage.setChoices(
       choices,
       0,
-      -1
+      cancelIndex
     );
 
     $gameMessage.setChoiceCallback(

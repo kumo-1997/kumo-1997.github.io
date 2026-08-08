@@ -4,7 +4,6 @@ var $plugins =
 [
 {"name":"KumoQuestSystem","status":true,"description":"Kumo Quest System","parameters":{}},
 {"name":"KumoQuestDatabase","status":true,"description":"Kumo Quest Database","parameters":{}},
-{"name":"KumoSecretWarp","status":true,"description":"Secret Warp Code","parameters":{}},
 {"name":"KumoCameraSystem","status":true,"description":"Kumo Camera System v1.0","parameters":{}},
 {"name":"KumoTeleportSystem","status":true,"description":"Kumo Teleport Stone System","parameters":{"SlotCount":"5","BlockedMaps":"[\"39\",\"40\",\"41\",\"49\",\"50\",\"51\"]"}},
 {"name":"Phileas_NovelStyleSaveWindow","status":true,"description":"v1.0.5 A novel-style save menu","parameters":{"screenshotSettings":"","screenshotWidth":"624","screenshotHeight":"624","screenshotAnchorX":"middle","screenshotAnchorY":"middle","windowSettings":"","columnsNumber":"2","rowsNumber":"2","spacing":"8","maxSaveFiles":"100","pageButtonPosition":"top","pageButtonMargin":"8"}},
@@ -13,5 +12,11 @@ var $plugins =
 {"name":"Kumo_DisableAutoSave","status":true,"description":"Disable auto save tool","parameters":{"BlockedMaps":"[\"35\",\"52\"]"}},
 {"name":"KumoFloatingText","status":true,"description":"v1.0 簡易玩家飄字","parameters":{}},
 {"name":"KumoAutoFight","status":true,"description":"Better Auto Battle AI (Basic)","parameters":{}},
-{"name":"KumoCheckActorEquips","status":true,"description":"Check actors special equips","parameters":{}}
+{"name":"KumoCheckActorEquips","status":true,"description":"Check actors special equips","parameters":{}},
+{"name":"KumoShortcut","status":true,"description":"Shortcut","parameters":{}},
+{"name":"KumoTutorialTransferLock","status":true,"description":"Tutorial Transfer Lock","parameters":{}},
+{"name":"KumoReleaseNotes","status":true,"description":"Generate Release Notes","parameters":{}},
+{"name":"KumoBattleTester","status":false,"description":"Battle Tester v0.1","parameters":{}},
+{"name":"KumoSecretWarp","status":false,"description":"Secret Warp Code","parameters":{}},
+{"name":"DRS_BoostEngine","status":false,"description":"","parameters":{}}
 ];
