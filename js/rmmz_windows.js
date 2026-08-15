@@ -1862,8 +1862,8 @@ Window_MenuCommand.prototype.addMainCommands = function() {
     if (this.needsCommand("equip")) {
         this.addCommand(TextManager.equip, "equip", enabled);
     }
-    this.addCommand("任務筆記本", "notebook", true);
-    this.addCommand("傳送石", "teleport", true);
+    this.addCommand(tr("任務筆記本"), "notebook", true);
+    this.addCommand(tr("傳送石"), "teleport", true);
     if (this.needsCommand("skill")) {
         this.addCommand(TextManager.skill, "skill", enabled);
     }
@@ -1880,7 +1880,7 @@ Window_MenuCommand.prototype.addFormationCommand = function() {
 };
 
 Window_MenuCommand.prototype.addOriginalCommands = function() {
-    this.addCommand("卡點恢復", "recover", true);
+    this.addCommand(tr("卡點恢復"), "recover", true);
 };
 
 Window_MenuCommand.prototype.addOptionsCommand = function() {

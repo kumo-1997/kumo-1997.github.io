@@ -29,7 +29,7 @@
     const scene = SceneManager._scene;
     if (scene && scene._spriteset) {
       scene._spriteset.showFloatingText(
-        args.text,
+        tr(args.text),
         Number(args.delay || 0)
       );
     }

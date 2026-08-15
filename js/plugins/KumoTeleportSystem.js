@@ -100,10 +100,10 @@
   function slotText(slot) {
 
     if (!slot) {
-      return "[空]";
+      return tr("[空]");
     }
 
-    return `${slot.mapName} (${slot.x},${slot.y})`;
+    return `${tr(slot.mapName)} (${slot.x},${slot.y})`;
   }
 
   function currentLocationData() {
@@ -139,8 +139,8 @@
         slot => slotText(slot)
       );
 
-    choices.push("記錄目前位置");
-    choices.push("取消");
+    choices.push(tr("記錄目前位置"));
+    choices.push(tr("取消"));
 
     const cancelIndex = choices.length - 1;
 
@@ -178,7 +178,7 @@
 
         if (!slot) {
 
-          window.KumoTeleportData.callbackMessage = "此欄位尚未記錄";
+          window.KumoTeleportData.callbackMessage = tr("此欄位尚未記錄");
 
           return;
         }
@@ -202,7 +202,7 @@
     ) {
 
       $gameMessage.add(
-        "這裡無法建立傳送標記"
+        tr("這裡無法建立傳送標記")
       );
 
       return;
@@ -216,7 +216,7 @@
         slot => slotText(slot)
       );
 
-    choices.push("取消");
+    choices.push(tr("取消"));
 
     $gameMessage.setChoices(
       choices,
@@ -236,7 +236,7 @@
 
         slots[index] = currentLocationData();
 
-        window.KumoTeleportData.callbackMessage = `已儲存至傳送點 ${index + 1}`;
+        window.KumoTeleportData.callbackMessage = `${tr("已儲存至傳送點")} ${index + 1}`;
       }
     );
   }
@@ -248,17 +248,15 @@
   function confirmTeleport(slot) {
 
     $gameMessage.setChoices(
-      ["是", "否"],
+      [tr("是"), tr("否")],
       0,
       1
     );
 
-    $gameMessage.add(
-      `確定傳送至:`
-    );
+    $gameMessage.add(tr("確定傳送至:"));
 
     $gameMessage.add(
-      `${slot.mapName} (${slot.x}, ${slot.y})`
+      `${tr(slot.mapName)} (${slot.x}, ${slot.y})`
     );
 
     $gameMessage.setChoiceCallback(

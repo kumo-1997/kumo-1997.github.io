@@ -17,9 +17,6 @@
  *
  * @command ShowCurrentTask
  * @text 顯示目前任務
- *
- * @command CancelCurrentTask
- * @text 取消目前任務
  * 
  * @command CompleteCurrentTask
  * @text 完成目前任務
@@ -44,13 +41,17 @@
     READY_TO_REPORT: 2,
     COMPLETED: 3
   };
-  const QUEST_STATE_MAP = {
-    [QUEST_STATE.NOT_ACCEPTED]: "未接取",
-    [QUEST_STATE.ACTIVE]: "進行中",
-    [QUEST_STATE.READY_TO_REPORT]: "等待回報",
-    [QUEST_STATE.COMPLETED]: "已完成"
-  };
 
+  // 狀態文字改為函式，方便即時翻譯
+  const getQuestStateText = (state) => {
+    const map = {
+      [QUEST_STATE.NOT_ACCEPTED]: tr("未接取"),
+      [QUEST_STATE.ACTIVE]: tr("進行中"),
+      [QUEST_STATE.READY_TO_REPORT]: tr("等待回報"),
+      [QUEST_STATE.COMPLETED]: tr("已完成")
+    };
+    return map[state] || "";
+  };
 
   const ACTIVE_TASK_VAR = 51;
   const SELECTED_TASK_VAR = 50;
@@ -69,7 +70,6 @@
     },
 
     getTasksByRank(rank) {
-
       return Object.values(
         KumoQuestDatabase.tasks
       ).filter(task =>
@@ -78,7 +78,6 @@
     },
 
     canAcceptTask(task) {
-
       if (
         $gameVariables.value(task.stateVar) !==
         QUEST_STATE.NOT_ACCEPTED
@@ -125,7 +124,7 @@
       const choices = [];
 
       for (let rank = 1; rank <= currentRank; rank++) {
-        choices.push(`${rank}級委託`);
+        choices.push(tr(`${rank}級委託`));
       }
 
       $gameMessage.setChoices(
@@ -176,7 +175,7 @@
       ) {
 
         $gameMessage.add(
-          "目前沒有可接受的委託。"
+          tr("目前沒有可接受的委託。")
         );
 
         $gameSwitches.setValue(NO_AVAILABLE_TASK_FLAG, true);
@@ -186,7 +185,7 @@
 
       const choices =
         KumoQuest.availableTasks.map(
-          task => task.title
+          task => tr(task.title)
         );
 
       $gameMessage.setChoices(
@@ -242,26 +241,24 @@
 
         if (window.KumoQuest.availableTasks.length > 0) {
           $gameMessage.add(
-            "尚未選擇任務。"
+            tr("尚未選擇任務。")
           );
         }
 
         return;
       }
 
-      $gameMessage.add(
-        `【${task.title}】`
-      );
+      $gameMessage.add(`${tr(task.title)}: `);
 
       task.description.forEach(
         line => {
-          $gameMessage.add(line);
+          $gameMessage.add(tr(line));
         }
       );
 
-      $gameMessage.add("完成後將會獲得:");
+      $gameMessage.add(tr("完成後將會獲得:"));
 
-      task.rewardText.forEach((line) => $gameMessage.add(line));
+      task.rewardText.forEach((line) => $gameMessage.add(tr(line)));
     }
   );
 
@@ -280,7 +277,7 @@
       if (!task) {
 
         $gameMessage.add(
-          "尚未選擇任務。"
+          tr("尚未選擇任務。")
         );
 
         return;
@@ -293,7 +290,7 @@
       ) {
 
         $gameMessage.add(
-          "目前已有進行中的任務。"
+          tr("目前已有進行中的任務。")
         );
 
         return;
@@ -310,7 +307,7 @@
       );
 
       $gameMessage.add(
-        "已接受委託。"
+        tr("已接受委託。")
       );
     }
   );
@@ -332,7 +329,7 @@
       if (taskId === 0) {
 
         $gameMessage.add(
-          "目前沒有進行中的任務。"
+          tr("目前沒有進行中的任務。")
         );
 
         return;
@@ -344,7 +341,7 @@
       if (!task) {
 
         $gameMessage.add(
-          "任務資料不存在。"
+          tr("任務資料不存在。")
         );
 
         return;
@@ -353,66 +350,18 @@
       const taskState = $gameVariables.value(task.stateVar);
 
       $gameMessage.add(
-        `【${task.title}】`
+        tr(`【${task.title}】`)
       );
 
-      $gameMessage.add(`狀態為: ${QUEST_STATE_MAP[taskState]}`);
+      $gameMessage.add(`${tr("狀態為:")} ${getQuestStateText(taskState)}`);
       $gameMessage.add("");
       $gameMessage.add("");
 
       task.description.forEach(
         line => {
-          $gameMessage.add(line);
+          $gameMessage.add(tr(line));
         }
       );
-    }
-  );
-
-  // ==========================
-  // 取消任務
-  // ==========================
-
-  PluginManager.registerCommand(
-    "KumoQuestSystem",
-    "CancelCurrentTask",
-    function () {
-
-      const taskId =
-        $gameVariables.value(
-          ACTIVE_TASK_VAR
-        );
-
-      if (taskId === 0) {
-
-        $gameMessage.add(
-          "目前沒有任務可取消。"
-        );
-
-        return;
-      }
-
-      const task =
-        KumoQuest.getTask(taskId);
-
-      if (!task) {
-        return;
-      }
-
-      $gameVariables.setValue(
-        task.stateVar,
-        QUEST_STATE.NOT_ACCEPTED
-      );
-
-      $gameVariables.setValue(
-        ACTIVE_TASK_VAR,
-        0
-      );
-
-      $gameMessage.add(
-        "已取消任務。"
-      );
-
-      window.KumoQuest.clearSelectedTask();
     }
   );
 
@@ -454,9 +403,8 @@
       );
 
       $gameMessage.add(
-        "委託目標已達成，請返回公會回報。"
+        tr("委託目標已達成，請返回公會回報。")
       );
-
 
       $gameSwitches.setValue(PREPARE_TO_REPORT_FLAG, true);
     }
@@ -505,10 +453,10 @@
       );
 
       $gameMessage.add(
-        "已完成委託，你獲得了"
+        tr("已完成委託，你獲得了")
       );
 
-      task.rewardText.forEach((line) => $gameMessage.add(line));
+      task.rewardText.forEach((line) => $gameMessage.add(tr(line)));
 
       $gameTemp.reserveCommonEvent(
         task.rewardEventId

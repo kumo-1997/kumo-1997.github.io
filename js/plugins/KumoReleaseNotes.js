@@ -4,8 +4,102 @@
  * @author Kumo
  */
 
+// 部署網頁版才會手動貼上物件
 const json = {
   "releases": [
+    {
+      "version": "V0.7.0-alpha Release Notes",
+      "sections": [
+        {
+          "title": "新增多國語系功能",
+          "description": "目前支援英文翻譯功能，可在選項中調整語言\nalpha 測試期間預設語言為「英文」，修正英文文本且穩定後會改回預設中文",
+          "groups": []
+        }
+      ]
+    },
+    {
+      "version": "V0.6.2 Release Notes",
+      "sections": [
+        {
+          "title": "技能調整",
+          "description": "",
+          "groups": [
+            {
+              "title": "調整魔力恢復數值",
+              "description": "",
+              "footer": "",
+              "items": [
+                "魔力恢復(小)：花費 25怒氣 恢復 20%MP (原先是 25怒氣 恢復 30MP)",
+                "魔力恢復(大)：花費 35怒氣 恢復 35%MP (原先是 50怒氣 恢復 65MP)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "BUG 修正",
+          "description": "",
+          "groups": [
+            {
+              "title": "修正任務87-走失狐狸任務完成後，可能會重複觸發足跡的對話",
+              "description": "假如玩家在沒觸發雪山入口足跡提示的情況下完成任務\n就會在完成後仍然觸發足跡提示，但狐狸已經回村",
+              "footer": "",
+              "items": [
+                "完成任務後，會略過沒觸發的足跡提示"
+              ]
+            },
+            {
+              "title": "修正狐狸走失事件提示不足",
+              "description": "",
+              "footer": "",
+              "items": [
+                "補上前往南方村鎮的提示",
+                "改善事件流程中的任務引導"
+              ]
+            },
+            {
+              "title": "修正艾蓮雪山防守任務戰鬥設定",
+              "description": "",
+              "footer": "",
+              "items": [
+                "修正雪山防守任務的戰鬥可以逃跑的問題",
+                "現在該戰鬥將無法逃跑"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "文字調整",
+          "description": "",
+          "groups": [
+            {
+              "title": "統一中文數字格式",
+              "description": "為了讓遊戲文本中的數字格式更加一致，將部分中文數字改為阿拉伯數字。",
+              "footer": "",
+              "items": [
+                "三級冒險者 → 3級冒險者",
+                "第三章節 → 第3章節",
+                "調整其他部分使用中文數字的文本"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "其他",
+          "description": "",
+          "groups": [
+            {
+              "title": "",
+              "description": "",
+              "footer": "",
+              "items": [
+                "修正部分文本錯誤",
+                "修改人物模型"
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       "version": "V0.6.1 Release Notes",
       "sections": [
@@ -234,7 +328,33 @@ const json = {
   ]
 };
 
-((param) => {
+(() => {
+  //-----------------------------------------------------------------------------
+  // 字級與顏色設定
+  //-----------------------------------------------------------------------------
+  const HEADER_SIZES = {
+    version: 26,   // #  H1
+    section: 24,   // ## H2
+    group: 22      // ### H3
+  };
+  const BODY_FONT_SIZE = 18;
+  const BODY_LINE_HEIGHT = BODY_FONT_SIZE + 8;
+
+  const HEADER_COLORS = {
+    version: "#DDD8CE",
+    section: "#DDD8CE",
+    group: "#DDD8CE"
+  };
+
+  const BODY_COLOR = "#E5D1AD";
+  const BULLET_COLOR = "#E5D1AD";
+
+  // 滑鼠滾輪上下捲動速度
+  const WHEEL_SPEED = 48;
+
+  // 鍵盤上下鍵捲動速度（每幀像素，可自行調整）
+  const KEY_SCROLL_SPEED = 6;
+
   //-----------------------------------------------------------------------------
   // MD Loader
   //-----------------------------------------------------------------------------
@@ -298,7 +418,7 @@ const json = {
         currentGroup = {
           title: line.substring(4),
           description: "",
-          footer: "",        // 列表後面的文字
+          footer: "",
           items: []
         };
         currentSection.groups.push(currentGroup);
@@ -322,14 +442,12 @@ const json = {
       // 一般文字
       if (currentGroup) {
         if (currentGroup.items.length === 0) {
-          // 還在列表之前 → 當作 description
           if (currentGroup.description) {
             currentGroup.description += "\n" + line;
           } else {
             currentGroup.description = line;
           }
         } else {
-          // 已經有列表了 → 當作 footer
           if (currentGroup.footer) {
             currentGroup.footer += "\n" + line;
           } else {
@@ -360,7 +478,6 @@ const json = {
       this.createPageButtons();
       this.createPageText();
 
-      // Windows: 直接讀取 md 檔案，不用手動產生 json
       // loadReleaseNotes(data => {
       //   this._window.setData(data);
       //   this.updatePageButtons();
@@ -376,7 +493,7 @@ const json = {
       this._pageSprite.bitmap = new Bitmap(160, 36);
       this._pageSprite.anchor.x = 0.5;
       this._pageSprite.x = Graphics.boxWidth / 2;
-      this._pageSprite.y = Graphics.boxHeight - 58;   // 跟按鈕對齊
+      this._pageSprite.y = Graphics.boxHeight - 58;
       this.addChild(this._pageSprite);
     }
 
@@ -400,7 +517,7 @@ const json = {
     createBackground() {
       this._backgroundSprite = new Sprite();
       this._backgroundSprite.bitmap = ImageManager.loadSystem("Board");
-      this.addChildAt(this._backgroundSprite, 0);   // 強制放到最下層
+      this.addChildAt(this._backgroundSprite, 0);
     }
 
     setBackground(bitmap) {
@@ -413,20 +530,18 @@ const json = {
     }
 
     createPageButtons() {
-      // 左（上一頁）
       this._prevButton = new Sprite_Button("pageup");
       this._prevButton.x = 50;
-      this._prevButton.y = Graphics.boxHeight - 55;   // 往下移，落在留白區
+      this._prevButton.y = Graphics.boxHeight - 55;
       this._prevButton.onClick = () => {
         this._window.changePage(-1);
         this.updatePageButtons();
       };
       this.addChild(this._prevButton);
 
-      // 右（下一頁）
       this._nextButton = new Sprite_Button("pagedown");
       this._nextButton.x = Graphics.boxWidth - 50 - this._nextButton.width;
-      this._nextButton.y = Graphics.boxHeight - 55;   // 往下移，落在留白區
+      this._nextButton.y = Graphics.boxHeight - 55;
       this._nextButton.onClick = () => {
         this._window.changePage(1);
         this.updatePageButtons();
@@ -467,7 +582,6 @@ const json = {
         SceneManager.pop();
       }
 
-      // 鍵盤換頁時也更新按鈕狀態
       if (Input.isTriggered("left") || Input.isTriggered("right") ||
         Input.isTriggered("pageup") || Input.isTriggered("pagedown")) {
         this.updatePageButtons();
@@ -490,10 +604,7 @@ const json = {
       this._measureOnly = false;
     }
 
-    // 無邊框
     _refreshFrame() { }
-
-    // 背景透明
     _refreshBack() { }
 
     setData(data) {
@@ -522,14 +633,22 @@ const json = {
     update() {
       super.update();
 
-      const speed = 48;
-      if (TouchInput.wheelY > 20) this._scrollY += speed;
-      if (TouchInput.wheelY < -20) this._scrollY -= speed;
+      if (TouchInput.wheelY > 20) this._scrollY += WHEEL_SPEED;
+      if (TouchInput.wheelY < -20) this._scrollY -= WHEEL_SPEED;
+
+      // 鍵盤上下鍵（人物移動的上/下）持續捲動
+      if (Input.isPressed("up")) {
+        this._scrollY -= KEY_SCROLL_SPEED;
+      }
+      if (Input.isPressed("down")) {
+        this._scrollY += KEY_SCROLL_SPEED;
+      }
 
       const maxScroll = Math.max(0, this._contentHeight - this.innerHeight);
       this._scrollY = this._scrollY.clamp(0, maxScroll);
       this.origin.y = this._scrollY;
 
+      // 左右換頁（維持原本功能）
       if (Input.isTriggered("left") || Input.isTriggered("pageup")) {
         this.changePage(-1);
       }
@@ -561,14 +680,22 @@ const json = {
       this.drawReleaseNotes(0);
     }
 
+    //-------------------------------------------------------------------------
+    // 繪製核心
+    //-------------------------------------------------------------------------
     drawReleaseNotes(y) {
       const release = this._releases[this._pageIndex];
       if (!release) return y;
 
+      // # Version (H1)
+      const h1 = HEADER_SIZES.version;
       if (!this._measureOnly) {
+        this.contents.fontSize = h1;
+        this.contents.textColor = HEADER_COLORS.version;
         this.drawText(release.version, 0, y, this.contentsWidth(), "center");
+        this.resetFontSettings();
       }
-      y += this.lineHeight() * 2;
+      y += h1 + 16;
 
       for (const section of release.sections) {
         y = this.drawSection(section, y);
@@ -578,10 +705,15 @@ const json = {
     }
 
     drawSection(section, y) {
+      // ## Section (H2)
+      const h2 = HEADER_SIZES.section;
       if (!this._measureOnly) {
+        this.contents.fontSize = h2;
+        this.contents.textColor = HEADER_COLORS.section;
         this.drawText(section.title, 0, y, this.contentsWidth());
+        this.resetFontSettings();
       }
-      y += this.lineHeight();
+      y += h2 + 10;
 
       if (section.description) {
         y = this.drawDescription(section.description, y);
@@ -591,7 +723,7 @@ const json = {
         y = this.drawGroup(group, y);
       }
 
-      y += this.lineHeight();
+      y += BODY_LINE_HEIGHT;
       return y;
     }
 
@@ -599,19 +731,27 @@ const json = {
       const lines = description.split("\n");
       for (const line of lines) {
         if (!this._measureOnly) {
+          this.contents.fontSize = BODY_FONT_SIZE;
+          this.contents.textColor = BODY_COLOR;
           this.drawText(line, indent, y, this.contentsWidth() - indent);
+          this.resetFontSettings();
         }
-        y += this.lineHeight();
+        y += BODY_LINE_HEIGHT;
       }
-      return y + this.lineHeight(); // 描述後面多留一行空白
+      return y + BODY_LINE_HEIGHT;
     }
 
     drawGroup(group, y) {
+      // ### Group (H3)
       if (group.title) {
+        const h3 = HEADER_SIZES.group;
         if (!this._measureOnly) {
+          this.contents.fontSize = h3;
+          this.contents.textColor = HEADER_COLORS.group;
           this.drawText(group.title, 24, y, this.contentsWidth() - 24);
+          this.resetFontSettings();
         }
-        y += this.lineHeight();
+        y += h3 + 6;
       }
 
       // 列表前的描述
@@ -629,15 +769,18 @@ const json = {
         y = this.drawDescription(group.footer, y, 24);
       }
 
-      y += this.lineHeight();
+      y += BODY_LINE_HEIGHT;
       return y;
     }
 
     drawItem(item, y) {
       if (!this._measureOnly) {
+        this.contents.fontSize = BODY_FONT_SIZE;
+        this.contents.textColor = BULLET_COLOR;
         this.drawText("• " + item, 48, y, this.contentsWidth() - 48);
+        this.resetFontSettings();
       }
-      return y + this.lineHeight();
+      return y + BODY_LINE_HEIGHT;
     }
   }
 
@@ -661,20 +804,17 @@ const json = {
     }
 
     update() {
-      super.update();          // 一定要先呼叫，才會更新 _hovered / _pressed
+      super.update();
       this.updateHoverEffect();
     }
 
     updateHoverEffect() {
-      // 使用內部屬性（RMMZ 沒有公開 isHovered / isPressed）
       const hovered = !!this._hovered;
       const pressed = !!this._pressed;
 
-      // 目標值
       this._targetOpacity = pressed ? 180 : (hovered ? 220 : 255);
       this._targetScale = hovered ? 1.05 : 1.0;
 
-      // 平滑過渡
       const lerpSpeed = 0.18;
 
       this.opacity += (this._targetOpacity - this.opacity) * lerpSpeed;
@@ -700,12 +840,8 @@ const json = {
 
   Scene_Title.prototype.createReleaseButton = function () {
     this._releaseButton = new Sprite_ReleaseButton();
-
-    // 因為改成 anchor 0.5，所以座標改為中心點
-    // 原本 y = Graphics.height - 116（圖片高度約 96 + 邊距）
-    this._releaseButton.x = 20 + 48;               // 大約圖片寬度一半
-    this._releaseButton.y = Graphics.height - 68;  // 中心點
-
+    this._releaseButton.x = 20 + 48;
+    this._releaseButton.y = Graphics.height - 68;
     this.addChild(this._releaseButton);
   };
 
