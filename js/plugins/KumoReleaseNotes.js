@@ -8,6 +8,44 @@
 const json = {
   "releases": [
     {
+      "version": "V0.7.0-beta Release Notes",
+      "sections": [
+        {
+          "title": "調整英文版文本內容",
+          "description": "因語境差異，調整部分英文的用詞",
+          "groups": []
+        },
+        {
+          "title": "英文版自動換行邏輯",
+          "description": "原本的換行方式導致閱讀困難，修改換行邏輯提升閱讀體驗",
+          "groups": []
+        },
+        {
+          "title": "BUG 修正",
+          "description": "",
+          "groups": [
+            {
+              "title": "補上缺失的翻譯內容",
+              "description": "",
+              "footer": "",
+              "items": [
+                "地圖名稱",
+                "裝備類型名稱"
+              ]
+            },
+            {
+              "title": "修復翻譯檔案載入錯誤的問題",
+              "description": "",
+              "footer": "",
+              "items": [
+                "舊版本翻譯載入可能無法讀取資料庫的資料而翻譯失敗，現已修正"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "version": "V0.7.0-alpha Release Notes",
       "sections": [
         {

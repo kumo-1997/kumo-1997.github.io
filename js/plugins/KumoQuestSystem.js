@@ -349,9 +349,7 @@
 
       const taskState = $gameVariables.value(task.stateVar);
 
-      $gameMessage.add(
-        tr(`【${task.title}】`)
-      );
+      $gameMessage.add(tr(task.title));
 
       $gameMessage.add(`${tr("狀態為:")} ${getQuestStateText(taskState)}`);
       $gameMessage.add("");

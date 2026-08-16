@@ -66,18 +66,41 @@
     var autoDetectTranslations = parameters['Auto Detect Translations'] === 'true';
     var translationMode = parameters['Translation Mode'] || 'simple'; // simple, full
 
+    /**
+     * 根據系統 / 瀏覽器語言自動判斷
+     * 只支援中文與英文：
+     * - 中文系統 → zh
+     * - 其他所有語言 → en
+     */
+    function detectSystemLanguage() {
+        var lang = '';
+        if (navigator.languages && navigator.languages.length > 0) {
+            lang = navigator.languages[0];
+        } else {
+            lang = navigator.language || navigator.userLanguage || '';
+        }
+        lang = (lang || '').toLowerCase();
+
+        if (lang.startsWith('zh')) {
+            return 'zh';
+        }
+        // 中文以外全部走英文
+        return 'en';
+    }
+
     //=========================================================================
     // TranslationManager
     //=========================================================================
 
     var TranslationManager = function () {
-        this._currentLanguage = defaultLanguage;
+        this._currentLanguage = detectSystemLanguage() || defaultLanguage || 'zh';
         this._translations = {};
         this._originalTexts = {};
         this._isInitialized = false;
         this._refreshCallbacks = [];
         this._availableLanguages = [];
         this._enableSubstringExtraction = translationMode === 'full';
+        this._databaseApplied = false; // 避免資料庫還沒載入就先嘗試做文字翻譯
     };
 
     TranslationManager.prototype.initialize = function () {
@@ -91,7 +114,6 @@
             this.loadLanguage(defaultLanguage, function () {
                 this._isInitialized = true;
                 this._applyTranslations();
-                this.applyDatabaseTranslations();
             }.bind(this));
         }
     };
@@ -333,7 +355,7 @@
     };
 
     TranslationManager.prototype._detectAvailableLanguages = function () {
-        var testFiles = ['zh', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'pt', 'ru', 'zh_TW', 'zh_CN'];
+        var testFiles = ['en', 'zh'];
         var loadedCount = 0;
         var self = this;
 
@@ -350,7 +372,6 @@
                     }
                     self._isInitialized = true;
                     self._applyTranslations();
-                    self.applyDatabaseTranslations();
                     console.log('可用語言:', self._availableLanguages);
                 }
             });
@@ -645,6 +666,17 @@
         };
     };
 
+    // 確保所有資料庫載入完成後才套用資料庫翻譯（解決 race condition）
+    var _Scene_Boot_start = Scene_Boot.prototype.start;
+    Scene_Boot.prototype.start = function () {
+        _Scene_Boot_start.call(this);
+
+        if (window.$translationManager && !$translationManager._databaseApplied) {
+            $translationManager.applyDatabaseTranslations();
+            $translationManager._databaseApplied = true;
+        }
+    };
+
     var _Window_Options_makeCommandList = Window_Options.prototype.makeCommandList;
     Window_Options.prototype.makeCommandList = function () {
         _Window_Options_makeCommandList.call(this);
@@ -715,7 +747,14 @@
     var _ConfigManager_applyData = ConfigManager.applyData;
     ConfigManager.applyData = function (config) {
         _ConfigManager_applyData.call(this, config);
-        this.language = config.language || 'zh';
+
+        // 優先順序：玩家存檔 → 系統語言 → 預設中文
+        if (config.language) {
+            this.language = config.language;
+        } else {
+            this.language = detectSystemLanguage() || defaultLanguage || 'zh';
+        }
+
         if ($translationManager && this.language !== $translationManager.getCurrentLanguage()) {
             $translationManager.setLanguage(this.language);
         }
@@ -744,21 +783,17 @@
     /**
      * 根據目前訊息視窗可用寬度自動插入換行
      * - 一律假設有臉圖
-     * - 翻譯檔不應包含 \n，此函式會完全重新排版
+     * - 會保留原本的換行結構（每個 $gameMessage.add 的內容獨立處理）
      * - 控制字元會先展開再測量
      */
     Window_Message.prototype.autoWrapText = function (text) {
         if (!text || text.length === 0) return text;
 
-        // 1. 先清除既有換行，全部重新排版
-        text = text.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
-
-        // 2. 正確取得可用寬度（相容 contentsWidth 是函式或屬性的情況）
+        // 1. 正確取得可用寬度
         var contentsW = this.contentsWidth;
         if (typeof contentsW === 'function') {
             contentsW = contentsW.call(this);
         }
-        // 後備方案
         if (!contentsW || contentsW <= 0) {
             contentsW = this.contents ? this.contents.width : (this.innerWidth || 700);
         }
@@ -769,58 +804,46 @@
             maxWidth = Math.floor(contentsW * 0.70);
         }
 
-        // 3. 如果整段已經很短，直接返回
-        var fullWidth = this.textWidth(this.convertEscapeCharacters(text));
-        if (fullWidth <= maxWidth) {
-            return text;
-        }
-
-        // 4. 以空白切分（保留空白）
-        var tokens = text.split(/(\s+)/);
-        var lines = [];
-        var currentLine = '';
-
-        for (var i = 0; i < tokens.length; i++) {
-            var token = tokens[i];
-            var testLine = currentLine + token;
-            var testWidth = this.textWidth(this.convertEscapeCharacters(testLine));
-
-            if (testWidth > maxWidth && currentLine !== '') {
-                lines.push(currentLine.replace(/\s+$/, ''));
-                currentLine = token.replace(/^\s+/, '');
-            } else {
-                currentLine = testLine;
-            }
-        }
-
-        if (currentLine) {
-            lines.push(currentLine.replace(/\s+$/, ''));
-        }
-
-        // 5. 處理單一字詞就超過寬度的情況（強制切開）
+        // 2. 先依照原本的換行切開，每一行獨立處理
+        var originalLines = text.split('\n');
         var finalLines = [];
-        for (var li = 0; li < lines.length; li++) {
-            var line = lines[li];
-            var lineWidth = this.textWidth(this.convertEscapeCharacters(line));
 
+        for (var i = 0; i < originalLines.length; i++) {
+            var line = originalLines[i].replace(/\s+/g, ' ').trim();
+
+            // 空行直接保留
+            if (!line) {
+                finalLines.push('');
+                continue;
+            }
+
+            // 如果這一行已經夠短，直接使用
+            var lineWidth = this.textWidth(this.convertEscapeCharacters(line));
             if (lineWidth <= maxWidth) {
                 finalLines.push(line);
                 continue;
             }
 
-            // 強制依字元切開
-            var chars = line.split('');
-            var temp = '';
-            for (var c = 0; c < chars.length; c++) {
-                var test = temp + chars[c];
-                if (this.textWidth(this.convertEscapeCharacters(test)) > maxWidth && temp !== '') {
-                    finalLines.push(temp);
-                    temp = chars[c];
+            // 3. 對過長的單行做自動換行（不切斷單字）
+            var tokens = line.split(/(\s+)/);
+            var currentLine = '';
+
+            for (var t = 0; t < tokens.length; t++) {
+                var token = tokens[t];
+                var testLine = currentLine + token;
+                var testWidth = this.textWidth(this.convertEscapeCharacters(testLine));
+
+                if (testWidth > maxWidth && currentLine !== '') {
+                    finalLines.push(currentLine.replace(/\s+$/, ''));
+                    currentLine = token.replace(/^\s+/, '');
                 } else {
-                    temp = test;
+                    currentLine = testLine;
                 }
             }
-            if (temp) finalLines.push(temp);
+
+            if (currentLine) {
+                finalLines.push(currentLine.replace(/\s+$/, ''));
+            }
         }
 
         return finalLines.join('\n');
@@ -903,6 +926,15 @@
             return window.$translationManager.translate(text);
         }
         return text;
+    };
+
+    // 翻譯地圖名稱（進入地圖時左上角顯示）
+    var _Game_Map_displayName = Game_Map.prototype.displayName;
+    Game_Map.prototype.displayName = function () {
+        var name = _Game_Map_displayName.call(this);
+        return (window.$translationManager && window.$translationManager._isInitialized)
+            ? window.$translationManager.translate(name)
+            : name;
     };
 
     // 翻譯「顯示文字」的名稱欄位（說話者名字）
@@ -1058,6 +1090,27 @@
                 // skillTypes 是純字串陣列，要用不一樣的方式處理
                 var original = name;
                 Object.defineProperty($dataSystem.skillTypes, index, {
+                    get: function () {
+                        if (window.$translationManager && window.$translationManager._isInitialized) {
+                            return window.$translationManager.translate(original);
+                        }
+                        return original;
+                    },
+                    set: function (value) {
+                        original = value;
+                    },
+                    configurable: true,
+                    enumerable: true
+                });
+            });
+        }
+
+        // 裝備類型（裝備畫面的欄位名稱：武器、盾、頭部…）
+        if ($dataSystem && $dataSystem.equipTypes) {
+            $dataSystem.equipTypes.forEach(function (name, index) {
+                if (!name) return;
+                var original = name;
+                Object.defineProperty($dataSystem.equipTypes, index, {
                     get: function () {
                         if (window.$translationManager && window.$translationManager._isInitialized) {
                             return window.$translationManager.translate(original);

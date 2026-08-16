@@ -3,7 +3,7 @@
     "main": "index.html",
     "chromium-args": "--force-color-profile=srgb --disable-devtools",
     "window": {
-        "title": "DebtCrystalAdventure v0.7.0-alpha",
+        "title": "DebtCrystalAdventure v0.7.0-beta",
         "width": 1024,
         "height": 684,
         "position": "center",
