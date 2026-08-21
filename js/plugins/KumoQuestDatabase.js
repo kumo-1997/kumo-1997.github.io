@@ -64,7 +64,7 @@
   };
 
   //-------------------------------------------------------------
-  // 預設玩家速度
+  // 教學戰鬥限制道具
   //-------------------------------------------------------------
   const TUTORIAL_SWITCH = 302; // 是否進行較學
   const TUTORIAL_TYPE_VAR = 410; // 5 = 戰鬥教學
@@ -81,5 +81,22 @@
       return false;
     }
     return _Game_BattlerBase_canUse.call(this, item);
+  };
+
+  //-------------------------------------------------------------
+  // 在技能列表的消耗數字後面加上單位（MP / Rage）
+  //-------------------------------------------------------------
+  const _Window_SkillList_drawSkillCost = Window_SkillList.prototype.drawSkillCost;
+  Window_SkillList.prototype.drawSkillCost = function(skill, x, y, width) {
+      if (this._actor.skillTpCost(skill) > 0) {
+          this.changeTextColor(ColorManager.tpCostColor());
+          const cost = this._actor.skillTpCost(skill);
+          // 使用 tr() 讓單位也可以被翻譯
+          this.drawText(cost + " " + tr("怒氣"), x, y, width, "right");
+      } else if (this._actor.skillMpCost(skill) > 0) {
+          this.changeTextColor(ColorManager.mpCostColor());
+          const cost = this._actor.skillMpCost(skill);
+          this.drawText(cost + " " + tr("MP"), x, y, width, "right");
+      }
   };
 })();

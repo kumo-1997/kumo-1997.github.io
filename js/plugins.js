@@ -3,6 +3,7 @@
 var $plugins =
 [
 {"name":"DynamicTranslation","status":true,"description":"動態翻譯系統 - 支援 mtool 工具的 key-value 翻譯檔案格式 + 自動換行","parameters":{"Default Language":"zh","Translation Path":"translations/","Auto Detect Translations":"true"}},
+{"name":"KumoFilesSwitcher","status":true,"description":"根據語言切換標題封面圖片或是其他需要一語言替換的資源","parameters":{}},
 {"name":"KumoQuestSystem","status":true,"description":"Kumo Quest System","parameters":{}},
 {"name":"KumoQuestDatabase","status":true,"description":"Kumo Quest Database","parameters":{}},
 {"name":"KumoCameraSystem","status":true,"description":"Kumo Camera System v1.0","parameters":{}},
@@ -19,5 +20,5 @@ var $plugins =
 {"name":"KumoReleaseNotes","status":true,"description":"Generate Release Notes","parameters":{}},
 {"name":"KumoBattleTester","status":false,"description":"Battle Tester v0.1","parameters":{}},
 {"name":"KumoSecretWarp","status":false,"description":"Secret Warp Code","parameters":{}},
-{"name":"DRS_BoostEngine","status":false,"description":"","parameters":{}}
+{"name":"DRS_BoostEngine","status":true,"description":"","parameters":{}}
 ];

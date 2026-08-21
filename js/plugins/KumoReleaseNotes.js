@@ -11,6 +11,23 @@ const json = {
       "version": "V0.7.0-beta Release Notes",
       "sections": [
         {
+          "title": "新增章節標題",
+          "description": "在每段主線章節之前插入章節動畫，提升遊戲體驗",
+          "groups": []
+        },
+        {
+          "title": "戰鬥場景",
+          "description": "",
+          "groups": [
+            {
+              "title": "調整技能消耗顯示",
+              "description": "原本是 Skill1 20 / Skill2 20，導致消耗種類不明確\n改成 Skill1 20 MP / Skill2 20 怒氣，增加辨識度",
+              "footer": "",
+              "items": []
+            }
+          ]
+        },
+        {
           "title": "調整英文版文本內容",
           "description": "因語境差異，調整部分英文的用詞",
           "groups": []

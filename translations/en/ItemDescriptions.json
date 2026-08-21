@@ -40,5 +40,13 @@
   "被凍結的野草，閃閃發光喔": "Frozen wild grass. It sparkles!",
   "被凍結的樹枝，閃閃發光喔": "A frozen branch. It sparkles!",
   "被凍結的稀有藥草，閃閃發光喔": "A frozen rare herb. It sparkles!",
-  "被結晶包覆的吊墜，看起來是某人的重要物品": "A pendant covered in crystal. It looks like an important item belonging to someone."
+  "被結晶包覆的吊墜，看起來是某人的重要物品": "A pendant covered in crystal. It looks like an important item belonging to someone.",
+  "裝滿油的罐子，點火後丟出去可造成火焰傷害\n有機會引燃敵人": "A jar filled with oil. Light it and throw it to deal fire damage.\nChance to set the enemy on fire.",
+  "裝滿雷電粉末的罐子，丟出去可造成雷電傷害\n有機會麻痺敵人": "A jar filled with lightning powder. Throw it to deal lightning damage.\nChance to paralyze the enemy.",
+  "裝滿霜寒粉末的罐子，丟出去可造成冰屬傷害\n有機會造成凍傷效果": "A jar filled with frost powder. Throw it to deal ice damage.\nChance to inflict frostbite.",
+  "一個可以打開任務面板的工具\n取代傳統文書作業，委託人再也不用排隊等候": "A tool that opens the Quest Panel.\nReplaces traditional paperwork so clients no longer have to wait in line.",
+  "假如忘記要做什麼，可按下「N」開啟「任務筆記本」\n會給你現在要做什麼的提示或是任務描述": "If you forget what to do, press \"N\" to open the \"Quest Notebook\".\nIt will give you hints or descriptions of your current objectives.",
+  "假如你嫌走路麻煩，可按下「T」使用「傳送石」\n可以立刻前往紀錄過的地點": "If walking is too much trouble, press \"T\" to use the \"Teleport Stone\".\nInstantly travel to a recorded location.",
+  "跟債務水晶相似魔力波長的水晶碎片\n相傳說帶有水晶的人會遭到詛咒並且強化魔物": "A crystal fragment with a magical wavelength similar to the Debt Crystal.\nLegend says those who carry it will be cursed and strengthen monsters.",
+  "受魔力影響的植物製成的纖維\n有阻隔寒氣的效果，常用來做成冬衣": "Fibers made from plants affected by magic.\nHas the effect of blocking cold and is often used to make winter clothing."
 }
