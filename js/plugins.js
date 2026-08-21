@@ -20,5 +20,5 @@ var $plugins =
 {"name":"KumoReleaseNotes","status":true,"description":"Generate Release Notes","parameters":{}},
 {"name":"KumoBattleTester","status":false,"description":"Battle Tester v0.1","parameters":{}},
 {"name":"KumoSecretWarp","status":false,"description":"Secret Warp Code","parameters":{}},
-{"name":"DRS_BoostEngine","status":true,"description":"","parameters":{}}
+{"name":"DRS_BoostEngine","status":false,"description":"","parameters":{}}
 ];
