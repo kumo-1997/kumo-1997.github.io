@@ -25,5 +25,8 @@
   "確定傳送至:": "Confirm teleport to:",
   "[空]": "[empty]",
   "是": "Yes",
-  "否": "No"
+  "否": "No",
+  "接受委託": "Accept quest",
+  "返回列表": "Back to list",
+  "藥水+1": "Potion+1"
 }
