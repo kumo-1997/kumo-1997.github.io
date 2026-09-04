@@ -8,6 +8,63 @@
 const json = {
   "releases": [
     {
+      "version": "V0.8.0 Release Notes",
+      "sections": [
+        {
+          "title": "外觀更新",
+          "description": "",
+          "groups": [
+            {
+              "title": "任務面板",
+              "description": "新增獨立場景顯示任務列表",
+              "footer": "",
+              "items": []
+            }
+          ]
+        },
+        {
+          "title": "任務接取流程簡化",
+          "description": "",
+          "groups": [
+            {
+              "title": "",
+              "description": "",
+              "footer": "",
+              "items": [
+                "移除「任務等級」的選取流程",
+                "直接顯示可接取的任務列表"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "version": "V0.7.0 Release Notes",
+      "sections": [
+        {
+          "title": "外觀更新",
+          "description": "",
+          "groups": [
+            {
+              "title": "更換對話框樣式",
+              "description": "",
+              "footer": "",
+              "items": [
+                "更換對話外框",
+                "更換對話中的確認按鈕外觀"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "調整英文版文本內容",
+          "description": "因語境差異，調整部分英文的用詞",
+          "groups": []
+        }
+      ]
+    },
+    {
       "version": "V0.7.0-beta Release Notes",
       "sections": [
         {
